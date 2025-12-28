@@ -1,6 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Theme } from "@radix-ui/themes";
 import "./index.scss";
+import "@radix-ui/themes/styles.css";
 import App from "./App.tsx";
 
 function initWidget() {
@@ -12,7 +14,9 @@ function initWidget() {
 
   createRoot(rootContainer).render(
     <StrictMode>
-      <App />
+      <Theme accentColor="orange">
+        <App />
+      </Theme>
     </StrictMode>
   );
 }
