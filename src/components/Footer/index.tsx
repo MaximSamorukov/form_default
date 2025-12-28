@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Link, Text } from "@radix-ui/themes";
+import { Text } from "@radix-ui/themes";
 import s from "./style.module.scss";
 import { PhoneOutgoing } from "lucide-react";
 
