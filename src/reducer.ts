@@ -3,7 +3,7 @@ export type StateType = {
   phoneNumber: string;
   email: string;
   message: string;
-  files: Blob[];
+  files: FileList | null;
 };
 
 export const initialState: StateType = {
@@ -11,12 +11,12 @@ export const initialState: StateType = {
   phoneNumber: "",
   email: "",
   message: "",
-  files: [],
+  files: null,
 };
 
 type ActionType = {
   type: keyof StateType;
-  payload: { value: string | number | Blob };
+  payload: { value: string | number | FileList | null };
 };
 
 export const reducer = (prevState: StateType, args: ActionType) => {

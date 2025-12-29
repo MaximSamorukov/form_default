@@ -2,10 +2,13 @@ import React, { useRef, useState } from "react";
 import { Card, Text } from "@radix-ui/themes";
 import s from "./style.module.scss";
 import { ArrowUpFromLine, FileText, X } from "lucide-react";
+import type { StateType } from "../../reducer";
 
-type FileUploadProps = {};
+type FileUploadProps = {
+  handleInput: (type: keyof StateType, arg: FileList | null) => void;
+};
 const MAX = 6;
-export const FileUpload: React.FC<FileUploadProps> = () => {
+export const FileUpload: React.FC<FileUploadProps> = ({ handleInput }) => {
   const [fileItems, setFileItems] = useState<FileList | null>(null);
   const ref = useRef<HTMLInputElement>(null);
   const onUpload = () => {
@@ -14,11 +17,12 @@ export const FileUpload: React.FC<FileUploadProps> = () => {
     }
   };
   const handleUpload: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    console.log(e.target.files);
     setFileItems(e.target.files);
+    handleInput("files", e.target.files);
   };
   const handleRemoveFiles = () => {
     setFileItems(null);
+    handleInput("files", null);
   };
   return (
     <div className={s.container}>

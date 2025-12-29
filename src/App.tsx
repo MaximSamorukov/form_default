@@ -19,7 +19,19 @@ function App() {
     files: true,
   });
   const handleSubmit = () => {
-    console.log(state);
+    const formData = new FormData();
+
+    formData.append("name", state.name);
+    formData.append("phoneNumber", state.phoneNumber);
+    formData.append("email", state.email);
+    formData.append("message", state.message);
+
+    if (state.files) {
+      Array.from(state.files).forEach((file) => {
+        formData.append("files", file);
+      });
+    }
+    console.log(formData);
   };
 
   const handleFormValidation = useCallback(
@@ -33,7 +45,10 @@ function App() {
   );
   const submitBtnDisabled = !!Object.values(formValid).filter((v) => !v).length;
 
-  const onInput = (type: keyof StateType, value: string | number | Blob) => {
+  const onInput = (
+    type: keyof StateType,
+    value: string | number | FileList | null
+  ) => {
     dispatch({ type, payload: { value } });
   };
   return (
@@ -80,7 +95,7 @@ function App() {
             placeholder="Сообщение"
           />
         </Flex>
-        <FileUpload />
+        <FileUpload handleInput={onInput} />
         <SubmitButton
           disabled={submitBtnDisabled}
           handleSubmit={handleSubmit}
