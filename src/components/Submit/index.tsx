@@ -4,9 +4,13 @@ import s from "./style.module.scss";
 
 type SubmitProps = {
   handleSubmit: () => void;
+  disabled: boolean;
 };
 
-export const SubmitButton: React.FC<SubmitProps> = ({ handleSubmit }) => {
+export const SubmitButton: React.FC<SubmitProps> = ({
+  disabled,
+  handleSubmit,
+}) => {
   return (
     <div className={s.container}>
       <Text className={s.text} color="gray">
@@ -15,7 +19,7 @@ export const SubmitButton: React.FC<SubmitProps> = ({ handleSubmit }) => {
         персональных данных.
       </Text>
       <div className={s.submitContainer}>
-        <Button onClick={handleSubmit} className={s.submit}>
+        <Button disabled={disabled} onClick={handleSubmit} className={s.submit}>
           Отправить
         </Button>
       </div>

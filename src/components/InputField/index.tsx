@@ -15,6 +15,7 @@ type InputFieldProps = {
   type: keyof StateType;
   handleInput: (type: keyof StateType, arg: string | number) => void;
   value: string;
+  handleValidation: (type: keyof StateType, v: boolean) => void;
 };
 
 export const InputField: React.FC<InputFieldProps> = ({
@@ -23,6 +24,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   type,
   handleInput,
   value,
+  handleValidation,
 }) => {
   const [error, setError] = useState<false | "REQUIRED" | "VALIDATION">(false);
   const { valid, validate } = useValidate(type);
@@ -40,13 +42,16 @@ export const InputField: React.FC<InputFieldProps> = ({
   const handleBlur = () => {
     if (required && !value) {
       setError("REQUIRED");
+      handleValidation(type, false);
       return;
     }
     if ((required && value && !valid) || (!required && !valid)) {
       setError("VALIDATION");
+      handleValidation(type, false);
       return;
     }
     setError(false);
+    handleValidation(type, true);
     return;
   };
 
