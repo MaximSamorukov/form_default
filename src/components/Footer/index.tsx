@@ -12,7 +12,7 @@ export const Footer: React.FC<SubmitProps> = () => {
         <PhoneOutgoing size={26} />
       </div>
       <Text className={s.text} color="gray">
-        Или обратитесь к нам по телефону: +7 (495) 308-05-21 (Москва)
+        Или обратитесь к нам по телефону: +7 (495) 111-05-45 (Москва)
       </Text>
     </div>
   );
