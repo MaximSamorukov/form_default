@@ -2,9 +2,11 @@ import React from "react";
 import { Button, Link, Text } from "@radix-ui/themes";
 import s from "./style.module.scss";
 
-type SubmitProps = {};
+type SubmitProps = {
+  handleSubmit: () => void;
+};
 
-export const SubmitButton: React.FC<SubmitProps> = () => {
+export const SubmitButton: React.FC<SubmitProps> = ({ handleSubmit }) => {
   return (
     <div className={s.container}>
       <Text className={s.text} color="gray">
@@ -13,7 +15,9 @@ export const SubmitButton: React.FC<SubmitProps> = () => {
         персональных данных.
       </Text>
       <div className={s.submitContainer}>
-        <Button className={s.submit}>Отправить</Button>
+        <Button onClick={handleSubmit} className={s.submit}>
+          Отправить
+        </Button>
       </div>
     </div>
   );
