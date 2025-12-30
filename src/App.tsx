@@ -1,4 +1,11 @@
-import { useCallback, useReducer, useState, lazy, Suspense } from "react";
+import {
+  useCallback,
+  useReducer,
+  useState,
+  lazy,
+  Suspense,
+  useRef,
+} from "react";
 import "./App.scss";
 import { Card, Flex } from "@radix-ui/themes";
 import { Header } from "./components/Header";
@@ -9,10 +16,12 @@ import { Footer } from "./components/Footer";
 import { initialState, reducer, type StateType } from "./reducer";
 import s from "./App.module.scss";
 import { Fallback } from "./components/Fallback";
+import { Modal } from "./components/Modal";
 const Policy = lazy(() => import("./components/Policy"));
 
 function App() {
   const [showPolicy, setShowPolicy] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [formValid, setFormValid] = useState({
     name: true,
@@ -38,9 +47,12 @@ function App() {
       });
     }
     resetForm();
+    setShowModal(true);
     console.log(formData);
   };
-
+  const onOpenModalChange = useCallback((s: boolean) => {
+    setShowModal(s);
+  }, []);
   const handleFormValidation = useCallback(
     (type: keyof StateType, v: boolean) => {
       setFormValid((prev) => ({
@@ -60,8 +72,14 @@ function App() {
   };
   const handleBack = useCallback(() => setShowPolicy(false), []);
   const handleShowPolicy = useCallback(() => setShowPolicy(true), []);
+
   return (
     <Card className={s.container} variant="surface" size={"2"}>
+      <Modal
+        open={showModal}
+        text="Text"
+        onOpenModalChange={onOpenModalChange}
+      />
       {showPolicy ? (
         <Suspense fallback={<Fallback />}>
           <Policy onBack={handleBack} />
