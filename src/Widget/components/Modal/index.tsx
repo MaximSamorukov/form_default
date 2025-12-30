@@ -1,5 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { Button } from "@radix-ui/themes";
+import { Button, VisuallyHidden } from "@radix-ui/themes";
 import s from "./style.module.scss";
 
 type ModalProps = {
@@ -18,6 +18,9 @@ export const Modal: React.FC<ModalProps> = ({
     <Dialog.Root open={open} modal onOpenChange={onOpenModalChange}>
       <Dialog.Overlay className={s.overlay} />
       <Dialog.Content className={s.content}>
+        <VisuallyHidden asChild>
+          <Dialog.Title>Notification</Dialog.Title>
+        </VisuallyHidden>
         <div className={s.textContainer}>{text}</div>
         <div className={s.closeButtonContainer}>
           <Dialog.Close asChild>

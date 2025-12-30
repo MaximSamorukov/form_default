@@ -40,18 +40,15 @@ function App() {
 
     if (state.files) {
       Array.from(state.files).forEach((file) => {
-        formData.append("files", file);
+        formData.append(`files`, file);
       });
     }
 
     try {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://localhost:3000/api/lead", {
+        method: "POST",
+        body: formData,
+      });
 
       if (response.ok) {
         setSubmitError(false);
