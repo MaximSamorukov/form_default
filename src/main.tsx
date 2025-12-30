@@ -1,9 +1,5 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Theme } from "@radix-ui/themes";
-import "./index.scss";
-import "@radix-ui/themes/styles.css";
-import App from "./App.tsx";
+import { Widget } from "./Widget/index.tsx";
 
 function initWidget() {
   const rootContainer = document.getElementById("form_widget");
@@ -12,13 +8,7 @@ function initWidget() {
     return;
   }
 
-  createRoot(rootContainer).render(
-    <StrictMode>
-      <Theme accentColor="orange">
-        <App />
-      </Theme>
-    </StrictMode>
-  );
+  createRoot(rootContainer).render(<Widget />);
 }
 
 if (document.readyState === "loading") {
