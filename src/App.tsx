@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useReducer,
-  useState,
-  lazy,
-  Suspense,
-  useRef,
-} from "react";
+import { useCallback, useReducer, useState, lazy, Suspense } from "react";
 import "./App.scss";
 import { Card, Flex } from "@radix-ui/themes";
 import { Header } from "./components/Header";
@@ -19,9 +12,13 @@ import { Fallback } from "./components/Fallback";
 import { Modal } from "./components/Modal";
 const Policy = lazy(() => import("./components/Policy"));
 
+const successMessage = "Заявка отправлена. Менеджер свяжется с вами.";
+const errorMessage = "Ошибка отправки заявки";
+
 function App() {
   const [showPolicy, setShowPolicy] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [formValid, setFormValid] = useState({
     name: true,
@@ -46,6 +43,7 @@ function App() {
         formData.append("files", file);
       });
     }
+
     resetForm();
     setShowModal(true);
     console.log(formData);
@@ -72,12 +70,12 @@ function App() {
   };
   const handleBack = useCallback(() => setShowPolicy(false), []);
   const handleShowPolicy = useCallback(() => setShowPolicy(true), []);
-
+  const modalText = submitError ? errorMessage : successMessage;
   return (
     <Card className={s.container} variant="surface" size={"2"}>
       <Modal
         open={showModal}
-        text="Text"
+        text={modalText}
         onOpenModalChange={onOpenModalChange}
       />
       {showPolicy ? (
