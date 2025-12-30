@@ -30,7 +30,7 @@ function App() {
   const resetForm = () => {
     dispatch({ type: "reset", payload: { value: null } });
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formData = new FormData();
 
     formData.append("name", state.name);
@@ -44,9 +44,27 @@ function App() {
       });
     }
 
-    resetForm();
-    setShowModal(true);
-    console.log(formData);
+    try {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        setSubmitError(false);
+        resetForm();
+      } else {
+        setSubmitError(true);
+      }
+    } catch (error) {
+      setSubmitError(true);
+      console.error("Submission error:", error);
+    } finally {
+      setShowModal(true);
+    }
   };
   const onOpenModalChange = useCallback((s: boolean) => {
     setShowModal(s);
