@@ -15,7 +15,7 @@ export const initialState: StateType = {
 };
 
 type ActionType = {
-  type: keyof StateType;
+  type: keyof StateType | "reset";
   payload: { value: string | number | FileList | null };
 };
 
@@ -24,6 +24,9 @@ export const reducer = (prevState: StateType, args: ActionType) => {
     type,
     payload: { value },
   } = args;
+  if (type === "reset") {
+    return initialState;
+  }
   const newState = {
     ...prevState,
     [type]: value,

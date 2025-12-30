@@ -171,7 +171,7 @@ const POLICY_TEXT = `
 type PolicyProps = {
   onBack: () => void;
 };
-export const Policy: React.FC<PolicyProps> = ({ onBack }) => {
+const Policy: React.FC<PolicyProps> = ({ onBack }) => {
   return (
     <div className={s.container}>
       <div className={s.content}>
@@ -185,3 +185,5 @@ export const Policy: React.FC<PolicyProps> = ({ onBack }) => {
     </div>
   );
 };
+
+export default Policy;

@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useState } from "react";
+import { useCallback, useReducer, useState, lazy, Suspense } from "react";
 import "./App.scss";
 import { Card, Flex } from "@radix-ui/themes";
 import { Header } from "./components/Header";
@@ -8,7 +8,8 @@ import { SubmitButton } from "./components/Submit";
 import { Footer } from "./components/Footer";
 import { initialState, reducer, type StateType } from "./reducer";
 import s from "./App.module.scss";
-import { Policy } from "./components/Policy";
+import { Fallback } from "./components/Fallback";
+const Policy = lazy(() => import("./components/Policy"));
 
 function App() {
   const [showPolicy, setShowPolicy] = useState(false);
@@ -20,6 +21,9 @@ function App() {
     message: true,
     files: true,
   });
+  const resetForm = () => {
+    dispatch({ type: "reset", payload: { value: null } });
+  };
   const handleSubmit = () => {
     const formData = new FormData();
 
@@ -33,6 +37,7 @@ function App() {
         formData.append("files", file);
       });
     }
+    resetForm();
     console.log(formData);
   };
 
@@ -58,7 +63,9 @@ function App() {
   return (
     <Card className={s.container} variant="surface" size={"2"}>
       {showPolicy ? (
-        <Policy onBack={handleBack} />
+        <Suspense fallback={<Fallback />}>
+          <Policy onBack={handleBack} />
+        </Suspense>
       ) : (
         <Flex direction={"column"} align={"start"} justify={"start"} gap={"5"}>
           <Header title="Оставить заявку на расчет" />
