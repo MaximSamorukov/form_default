@@ -30,6 +30,7 @@ function App() {
   const resetForm = () => {
     dispatch({ type: "reset", payload: { value: null } });
   };
+
   const handleSubmit = async () => {
     const formData = new FormData();
 
@@ -140,7 +141,7 @@ function App() {
               placeholder="Сообщение"
             />
           </Flex>
-          <FileUpload handleInput={onInput} />
+          <FileUpload handleInput={onInput} files={state.files} />
           <SubmitButton
             showPolicy={handleShowPolicy}
             disabled={submitBtnDisabled}

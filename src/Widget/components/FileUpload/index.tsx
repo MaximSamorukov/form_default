@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, Text } from "@radix-ui/themes";
 import s from "./style.module.scss";
 import { ArrowUpFromLine, FileText, X } from "lucide-react";
@@ -6,9 +6,13 @@ import type { StateType } from "../../reducer";
 
 type FileUploadProps = {
   handleInput: (type: keyof StateType, arg: FileList | null) => void;
+  files: FileList | null;
 };
 const MAX = 6;
-export const FileUpload: React.FC<FileUploadProps> = ({ handleInput }) => {
+export const FileUpload: React.FC<FileUploadProps> = ({
+  files,
+  handleInput,
+}) => {
   const [fileItems, setFileItems] = useState<FileList | null>(null);
   const ref = useRef<HTMLInputElement>(null);
   const onUpload = () => {
@@ -16,6 +20,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({ handleInput }) => {
       ref.current.click();
     }
   };
+  useEffect(() => {
+    setFileItems(files);
+  }, [files]);
   const handleUpload: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setFileItems(e.target.files);
     handleInput("files", e.target.files);
