@@ -45,7 +45,7 @@ function App() {
       });
     }
     const url =
-      !import.meta.env.VITE_SERVER || import.meta.env.VITE_SERVER === "prod"
+      import.meta.env.VITE_SERVER === "prod"
         ? import.meta.env.VITE_PROD_TG_SERVER_URL
         : import.meta.env.VITE_LOCAL_TG_SERVER_URL;
     try {
