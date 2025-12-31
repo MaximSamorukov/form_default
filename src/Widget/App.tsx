@@ -44,9 +44,10 @@ function App() {
         formData.append(`files`, file);
       });
     }
-    const url = true
-      ? "https://next-default-widget-server.vercel.app/api/lead/telegram"
-      : "http://localhost:3000/api/lead/telegram";
+    const url =
+      !import.meta.env.VITE_SERVER || import.meta.env.VITE_SERVER === "prod"
+        ? import.meta.env.VITE_PROD_TG_SERVER_URL
+        : import.meta.env.VITE_LOCAL_TG_SERVER_URL;
     try {
       const response = await fetch(url, {
         method: "POST",
