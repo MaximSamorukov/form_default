@@ -1,24 +1,37 @@
-import { defineConfig } from "vite";
+import { defineConfig, type UserConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import { resolve } from "path";
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    lib: {
-      entry: resolve(__dirname, "src/main.tsx"),
-      name: "FormWidget",
-      formats: ["iife"],
-      fileName: () => "form-widget.js",
+export default defineConfig(() => {
+  const isLib = process.env.VITE_BUILD_MODE === "lib";
+
+  const config: UserConfig = {
+    plugins: [react()],
+    define: {
+      "process.env.NODE_ENV": '"production"',
     },
-    rollupOptions: {
-      output: {
-        assetFileNames: "form-widget.css",
+  };
+
+  if (isLib) {
+    config.build = {
+      lib: {
+        entry: resolve(__dirname, "src/main.tsx"),
+        name: "FormWidget",
+        formats: ["iife"],
+        fileName: () => "form-widget.js",
       },
-    },
-  },
-  define: {
-    "process.env.NODE_ENV": '"production"',
-  },
+      rollupOptions: {
+        output: {
+          assetFileNames: "form-widget.css",
+        },
+      },
+    };
+  } else {
+    config.build = {
+      outDir: "dist",
+    };
+  }
+
+  return config;
 });

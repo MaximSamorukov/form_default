@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "VITE_SERVER=local vite --host",
     "dev:prod": "VITE_SERVER=prod vite --host",
-    "build": "VITE_SERVER=prod tsc -b && vite build",
+    "build": "npm run build:app",
+    "build:lib": "export VITE_BUILD_MODE=lib && tsc -b && vite build",
+    "build:app": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
