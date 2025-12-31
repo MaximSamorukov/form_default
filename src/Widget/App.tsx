@@ -14,6 +14,7 @@ const Policy = lazy(() => import("./components/Policy"));
 
 const successMessage = "Заявка отправлена. Менеджер свяжется с вами.";
 const errorMessage = "Ошибка отправки заявки";
+type Target = "TG" | "BITRIX" | "AmoCRM";
 
 function App() {
   const [showPolicy, setShowPolicy] = useState(false);
@@ -30,8 +31,7 @@ function App() {
   const resetForm = () => {
     dispatch({ type: "reset", payload: { value: null } });
   };
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (type: Target) => {
     const formData = new FormData();
 
     formData.append("name", state.name);
@@ -44,29 +44,66 @@ function App() {
         formData.append(`files`, file);
       });
     }
-    const url =
-      import.meta.env.VITE_SERVER === "prod"
-        ? import.meta.env.VITE_PROD_TG_SERVER_URL
-        : import.meta.env.VITE_LOCAL_TG_SERVER_URL;
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        body: formData,
-      });
+    if (type === "TG") {
+      /**
+       * Отправление в Телеграм
+       */
+      const urlTG =
+        import.meta.env.VITE_SERVER === "prod"
+          ? import.meta.env.VITE_PROD_TG_SERVER_URL
+          : import.meta.env.VITE_LOCAL_TG_SERVER_URL;
+      try {
+        const response = await fetch(urlTG, {
+          method: "POST",
+          body: formData,
+        });
 
-      if (response.ok) {
-        setSubmitError(false);
-        resetForm();
-      } else {
+        if (response.ok) {
+          setSubmitError(false);
+          resetForm();
+        } else {
+          setSubmitError(true);
+        }
+      } catch (error) {
         setSubmitError(true);
+        console.error("Submission error:", error);
+      } finally {
+        setShowModal(true);
       }
-    } catch (error) {
-      setSubmitError(true);
-      console.error("Submission error:", error);
-    } finally {
-      setShowModal(true);
+      return;
     }
+    if (type === "BITRIX") {
+      /**
+       * Отправление в Битрикс
+       */
+      const urlBitrix =
+        import.meta.env.VITE_SERVER === "prod"
+          ? import.meta.env.VITE_PROD_BITRIX_SERVER_URL
+          : import.meta.env.VITE_LOCAL_BITRIX_SERVER_URL;
+      try {
+        const response = await fetch(urlBitrix, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          setSubmitError(false);
+          resetForm();
+        } else {
+          setSubmitError(true);
+        }
+      } catch (error) {
+        setSubmitError(true);
+        console.error("Submission error:", error);
+      } finally {
+        setShowModal(true);
+      }
+      return;
+    }
+    setSubmitError(false);
+    resetForm();
   };
+
   const onOpenModalChange = useCallback((s: boolean) => {
     setShowModal(s);
   }, []);
@@ -148,7 +185,7 @@ function App() {
           <SubmitButton
             showPolicy={handleShowPolicy}
             disabled={submitBtnDisabled}
-            handleSubmit={handleSubmit}
+            handleSubmit={() => handleSubmit("BITRIX")}
           />
           <Footer />
         </Flex>
