@@ -9,11 +9,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 26px;
+  gap: 10px;
 }
 
 .text {
-  height: 30px;
+  height: fit-content;
   font-size: 12px;
   text-align: center;
   font-weight: 500;
@@ -23,6 +23,9 @@
   width: 65%;
   height: 45px;
   font-size: 16px;
+  @media (max-width: 400px) {
+    width: 100%;
+  }
   &Container {
     width: 100%;
     height: fit-content;

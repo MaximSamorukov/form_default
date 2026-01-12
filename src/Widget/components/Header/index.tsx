@@ -14,11 +14,11 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
         <Heading>{title}</Heading>
         <Text style={{ fontSize: 14 }}>*обязательно для заполнения</Text>
       </div>
-      <div className={s.controls}>
+      {/*<div className={s.controls}>
         <Button variant="surface">
           <CloseIcon />
         </Button>
-      </div>
+      </div>*/}
     </div>
   );
 };

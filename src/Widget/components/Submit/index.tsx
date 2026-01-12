@@ -15,6 +15,11 @@ export const SubmitButton: React.FC<SubmitProps> = ({
 }) => {
   return (
     <div className={s.container}>
+      <div className={s.submitContainer}>
+        <Button disabled={disabled} onClick={handleSubmit} className={s.submit}>
+          Отправить
+        </Button>
+      </div>
       <Text className={s.text} color="gray">
         Нажимая на кнопку «Отправить», Вы принимаете условия{" "}
         <button className={s.btnPolicy} onClick={showPolicy}>
@@ -22,11 +27,6 @@ export const SubmitButton: React.FC<SubmitProps> = ({
         </button>{" "}
         в отношении обработки персональных данных.
       </Text>
-      <div className={s.submitContainer}>
-        <Button disabled={disabled} onClick={handleSubmit} className={s.submit}>
-          Отправить
-        </Button>
-      </div>
     </div>
   );
 };
