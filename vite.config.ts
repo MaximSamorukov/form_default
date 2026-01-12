@@ -19,11 +19,11 @@ export default defineConfig(() => {
         entry: resolve(__dirname, "src/main.tsx"),
         name: "FormWidget",
         formats: ["iife"],
-        fileName: () => "form-widget.js",
+        fileName: () => "form_lead_widget.js",
       },
       rollupOptions: {
         output: {
-          assetFileNames: "form-widget.css",
+          assetFileNames: "form_lead_widget.css",
         },
       },
     };
