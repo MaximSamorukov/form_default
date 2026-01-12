@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Heading, Text } from "@radix-ui/themes";
-import { CloseIcon } from "../Close";
+import { Heading, Text } from "@radix-ui/themes";
+//import { CloseIcon } from "../Close";
 import s from "./style.module.scss";
 
 type HeaderProps = {
