@@ -4,7 +4,9 @@ import { Widget } from "./Widget/index.tsx";
 function initWidget() {
   const rootContainer = document.getElementById("form_lead_widget");
   if (!rootContainer) {
-    console.error('FormWidget: Container with id "form_lead_widget" not found');
+    console.error(
+      'FormWidget: Container with id "form_lead_widget" not found!'
+    );
     return;
   }
 
